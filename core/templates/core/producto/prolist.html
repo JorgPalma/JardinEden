@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+    {% block contenido %}
+    {% load static %}
+    {% load humanize %}
+
+    <script>
+        function eliminarProducto(id) {
+            Swal.fire({
+                "title": "¿Estás segur@?",
+                "text": "Esta acción es irreversible",
+                "icon": "question",
+                "showCancelButton": true,
+                "cancelButtonText": "No",
+                "confirmButtonText": "Sí",
+                "reverseButtons": true,
+                "confirmButtonColor": "#dc3545"
+            })
+            .then(function(result) {
+                if(result.isConfirmed) {
+                    window.location.href = "/prodel/"+id
+                }
+            })
+        }
+    </script>
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-9 card-form pb-3">
+            <h2 class="text-center">Listado de productos</h2>
+            <hr>
+            <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="row">#</th>
+                    <th scope="row">Nombre</th>
+                    <th scope="row">Categoría</th>
+                    <th scope="row">Precio</th>
+                    <th scope="row">Stock</th>
+                    <th scope="row">Editar | Borrar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for p in productos %}
+                    <tr>
+                        <th scope="row">{{ p.id | intcomma }}</th>
+                        <td>{{ p.nombre | capfirst }}</td>
+                        <td>{{ p.categoria | capfirst }}</td>
+                        <td>${{ p.precio | intcomma }}</td>
+                        <td>{{ p.stock | intcomma }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-warning d-inline-block" href="{% url 'promod' p.id %}"><i class="fa-solid fa-pencil"></i></a>
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <a class="btn btn-sm btn-danger d-inline-block" href="#" onclick="eliminarProducto({{ p.id }})"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+        <div class="col-3 d-flex justify-content-end">
+            <a class="btn btn-lg btn-success position-fixed" href="{% url 'proadd' %}">Agregar nuevo producto</a>
+        </div>
+    </div>
+
+    {% endblock %}

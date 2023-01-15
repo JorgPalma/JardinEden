@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+    {% block contenido %}
+    {% load static %}
+    {% load humanize %}
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-8 card-form pb-3">
+            <div class="row d-flex justify-content-between align-items-center mb-1">
+                <div class="col-3">
+                    <h3 class="text-start">Factura electrónica</h3>
+                </div>
+                <div class="col-2">
+                    <img src="{% static 'core/img/logo_jardin.png' %}" width="100%" alt="">
+                </div>
+            </div>
+            <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-3">
+                    <h6 class="fw-bold">Jardín del Edén</h6>
+                </div>
+                <div class="col-6 text-end">
+                    <h6> {{ventas.timestamp}} </h6>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-3">
+                    <h6 class="fw-light">Dirección Ruta 1 #1007</h6>
+                </div>
+                <div class="col-6 text-end">
+                    <h6>Factura N° {{ ventas.idventa }}</h6>
+                </div>
+            </div>
+            <table class="table table-bordered table-sm mb-3">
+                <thead>
+                    <tr>
+                        <td>Empresa</td>
+                        <td>Jardín del Edén</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Representante de la compra</td>
+                        <td>{{ ventas.vendedor }}</td>
+                    </tr>
+                    <tr>
+                        <td>DNI</td>
+                        <td>00008</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr class="table-warning">
+                        <th scope="row">Producto</th>
+                        <th scope="row">Cantidad</th>
+                        <th scope="row">Precio unitario</th>
+                        <th scope="row">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in detalles %}
+                        <tr class="table-light">
+                            <td>{{ d.producto | capfirst}}</td>
+                            <td>{{ d.cantidad | intcomma }} Unidades</td>
+                            <td>{{ d.producto.precio | intcomma}} ALP</td>
+                            <td>{{ d.subtotal | intcomma}} ALP</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-light">
+                        <td scope="row" colspan="3" class="fw-bold text-end">Total: </td>
+                        <td scope="row" class="fw-bold">{{ ventas.total | intcomma }} ALP</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% endblock %}

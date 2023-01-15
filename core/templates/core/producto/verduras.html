@@ -1,0 +1,30 @@
+{% extends 'core/base2.html' %}
+    {% block contenido %}
+    {% load static %}
+    {% load humanize %}
+
+        <div class="row mb-3">
+            <div class="col-12 d-flex justify-content-start px-4">
+                <h2>Nuestras verduras</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-start">
+            {% for p in productos %}
+            <div class="col-2 d-flex justify-content-center flex-wrap card-producto mx-3 mb-3 pb-3">
+                <h6 class="text-center">{{ p.stock | intcomma}} unidades</h6>
+                {% if p.imagen %}
+                <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" width="100%">
+                {% endif %}
+                <h6 class="text-center width-card-full">{{ p.nombre | capfirst }}</h6>
+                <p class="text-center width-card-full">${{ p.precio | intcomma }}</p>
+                {% if p.stock <= 0 %}
+                    <a href="{% url 'add_cart' p.id %}" class="align-self-center btn btn-sm btn-secondary disabled" role="button" aria-disabled="true">AGOTADO</a >
+                {% else %}
+                <a href="{% url 'add_cart' p.id %}" class="align-self-center btn btn-sm btn-primary"><i class="fa-solid fa-cart-plus"></i>  Agregar al carrito</a >
+                {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    
+
+    {% endblock %}

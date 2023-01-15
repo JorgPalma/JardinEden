@@ -1,0 +1,48 @@
+footer {
+    background: #378137;
+}
+
+footer img {
+    border-radius: 20px;
+}
+
+footer ul{
+    text-decoration: none;
+    list-style: none;
+}
+
+footer ul span {
+    display: inline-block;
+    color: white;
+    margin-right: 5px;
+}
+
+footer ul p {
+    display: inline-block;
+    color: white;
+    font-weight: 500;
+}
+
+.width-card-full {
+    width: 100%;
+}
+
+.card-producto {
+    background: #f1f1f1;
+    border-radius: 10px;
+    padding-top: 10px;
+}
+
+.card-producto img{
+    border-radius: 5px;
+}
+
+.botonera-admin a{
+    font-size: 20px;
+}
+
+.card-form {
+    background: #f1f1f1;
+    border-radius: 10px;
+    padding-top: 10px;
+}

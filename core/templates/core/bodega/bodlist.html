@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+    {% block contenido %}
+    {% load static %}
+    {% load humanize %}
+
+    <script>
+        function eliminarDeposito(id) {
+            Swal.fire({
+                "title": "¿Estás segur@?",
+                "text": "Esta acción es irreversible",
+                "icon": "question",
+                "showCancelButton": true,
+                "cancelButtonText": "No",
+                "confirmButtonText": "Sí",
+                "reverseButtons": true,
+                "confirmButtonColor": "#dc3545"
+            })
+            .then(function(result) {
+                if(result.isConfirmed) {
+                    window.location.href = "/boddel/"+id
+                }
+            })
+        }
+    </script>
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-9 card-form pb-3">
+            <h2 class="text-center">Listado de depósitos en bodega</h2>
+            <hr>
+            <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Borrar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for d in depositos %}
+                    <tr>
+                        <th scope="row">{{ d.vendedor | capfirst }}</th>
+                        <td>{{ d.producto }}</td>
+                        <td>{{ d.cantidadp }}</td>
+                        <td>{{ d.timestamp | naturaltime}}</td>
+                        <td>
+                            {% if request.user == d.vendedor %}
+                            <a class="btn btn-sm btn-danger d-inline-block" href="#" onclick="eliminarDeposito({{ d.id }})"><i class="fa-solid fa-trash"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+        <div class="col-3">
+            <a class="btn btn-lg btn-success position-fixed" href="{% url 'bodadd' %}">Realizar nuevo depósito</a>
+        </div>
+    </div>
+
+    {% endblock %}

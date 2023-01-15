@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+    {% block contenido %}
+    {% load static %}
+    {% load humanize %}
+    {% load crispy_forms_tags %}
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-6 card-form pb-3">
+                <h2 class="text-center">Agregar producto</h2>
+                <hr>
+                <form action="" method="post" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+                    {{ form | crispy }}
+
+                    <div class="mt-5 d-flex justify-content-end">
+                        <a href="{% url 'prolist' %}" class="btn btn-lg btn-danger">Cancelar</a>
+                        &nbsp;
+                        <input type="reset" value="Limpiar" class="btn btn-lg btn-warning">
+                        &nbsp;
+                        <input type="submit" value="Agregar" class="btn btn-lg btn-success">
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    
+
+    {% endblock %}
